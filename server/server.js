@@ -4,8 +4,14 @@ const express = require('express');
 const app = express();
 const bodyParser=require('body-parser');
 const path = require('path')
+const cors = require('cors');
 
 const db = require('./config/mongoose.js');
+
+const allowedOrigins = [
+    'http://localhost:3000',    // Frontend development server
+    // 'https://your-production-app.com',  // Production frontend 
+  ];
 
 // Used express.urlencoded with extended option
 app.use(bodyParser.json());

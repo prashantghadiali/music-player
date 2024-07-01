@@ -20,7 +20,7 @@ const FooterContent = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [audioPlayer, setAudioPlayer] = useState(null);
     const audioRef = useRef(null);
-
+    
     useEffect(() => {
         if (!audioPlayer) {
             const player = new Howl({
@@ -43,7 +43,10 @@ const FooterContent = () => {
             audioPlayer.unload();
             audioPlayer.load();
         }
-    }, [currentSongIndex]);
+    
+        // Add audioPlayer and handleNext to the dependency array
+    }, [currentSongIndex, audioPlayer, handleNext]);
+    
 
     const handlePlay = () => {
         if (audioPlayer) {

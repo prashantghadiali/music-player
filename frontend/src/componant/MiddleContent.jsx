@@ -21,7 +21,7 @@ const MiddleContent = () => {
                             pointerEvents="none"
                             borderRadius={'7vh'}
                             paddingRight={5}
-                            children={<AiOutlineSearch color="gray.300" />}
+                            children={<AiOutlineSearch />}
                         />
                         <Input type='search' width={400} borderRadius="5vh" placeholder="Search" />
                     </InputGroup>
@@ -48,7 +48,7 @@ const MiddleContent = () => {
                         </Tr>
                     </Thead>
                     <Tbody >
-                        <Tr _hover={{ bg: 'red.500' }}>
+                        <Tr className="hover-row" _hover={{ bg: 'red.500' }}>
                             <Td>1</Td>
                             <Td><Flex><WrapItem>
                                 <Avatar size='sm' name='Kent Dodds' src='https://bit.ly/kent-c-dodds' />{' '}
@@ -114,6 +114,11 @@ const MiddleContent = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
+            <style jsx>{`
+                .hover-row:hover {
+                    background-color: red !important;
+                }
+            `}</style>
         </div>
     )
 }
