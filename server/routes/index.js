@@ -20,6 +20,6 @@ router.get('/admin', auth.authMiddleware, (req, res) => {
     res.status(200).json({ message: 'Access granted to protected route', user: req.user });
 });
 
-router.post('/admin/add', validateAddSong, validateInputs, auth.authMiddleware, upload.single('songFile'), addSong);
+router.post('/admin/song/add', validateAddSong, validateInputs, auth.authMiddleware, upload.single('songFile'), addSong);
 
 module.exports = router;

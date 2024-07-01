@@ -14,7 +14,7 @@ const page = () => {
     formData.append('genre', 'Pop');
     formData.append('file', fs.createReadStream('/path/to/song.mp3')); // Ensure 'file' matches the field name in multer setup
     
-    axios.post('http://localhost:3000/api/songs/add', formData, {
+    axios.post('https://music-player-mel3.onrender.com/v1/admin/song/addsongs', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         ...formData.getHeaders(),
