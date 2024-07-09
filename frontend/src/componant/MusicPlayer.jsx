@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Sidebar from './Sidebar';
 import MiddleContent from './MiddleContent'
 import FooterContent from './FooterContent'
+// import FallingRain from './FallingRain'
+// import ThreeScene from './ThreeScene';
 
 const MusicPlayer = () => {
   const [showList, setShowList] = useState(false);
@@ -38,6 +40,9 @@ const MusicPlayer = () => {
 
       {/* Middle Content */}
       <GridItem colSpan={1}>
+        {/* <FallingRain /> */}
+        {/* <ThreeScene /> */}
+
         <MiddleContent />
       </GridItem>
 

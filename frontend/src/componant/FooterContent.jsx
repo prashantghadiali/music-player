@@ -1,7 +1,7 @@
-import { Box, Card, CardBody,Button, Center, Image, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Card, CardBody, Button, Center, Image, SimpleGrid, Text } from '@chakra-ui/react';
 import { FaPlay, FaPause, FaStepBackward, FaStepForward } from 'react-icons/fa';
 import { Howl } from 'howler';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 
 const songs = [
     {
@@ -15,45 +15,16 @@ const songs = [
 ];
 
 const FooterContent = () => {
-    // Dummy functions for play, pause, previous, next actions
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [audioPlayer, setAudioPlayer] = useState(null);
-    const audioRef = useRef(null);
-    
-    useEffect(() => {
-        if (!audioPlayer) {
-            const player = new Howl({
-                src: [songs[currentSongIndex].src],
-                html5: true,
-                onplay: () => {
-                    setIsPlaying(true);
-                },
-                onpause: () => {
-                    setIsPlaying(false);
-                },
-                onend: () => {
-                    setIsPlaying(false);
-                    // Automatically play next song when current song ends
-                    handleNext();
-                },
-            });
-            setAudioPlayer(player);
-        } else {
-            audioPlayer.unload();
-            audioPlayer.load();
-        }
-    
-        // Add audioPlayer and handleNext to the dependency array
-    }, [currentSongIndex, audioPlayer, handleNext]);
-    
+    const audioPlayerRef = useRef(null);
 
     const handlePlay = () => {
-        if (audioPlayer) {
+        if (audioPlayerRef.current) {
             if (isPlaying) {
-                audioPlayer.pause();
+                audioPlayerRef.current.pause();
             } else {
-                audioPlayer.play();
+                audioPlayerRef.current.play();
             }
         }
     };
@@ -68,27 +39,49 @@ const FooterContent = () => {
         setCurrentSongIndex(newIndex);
     };
 
+    useEffect(() => {
+        const player = new Howl({
+            src: [songs[currentSongIndex].src],
+            html5: true,
+            onplay: () => {
+                setIsPlaying(true);
+            },
+            onpause: () => {
+                setIsPlaying(false);
+            },
+            onend: () => {
+                setIsPlaying(false);
+                handleNext();
+            },
+        });
+
+        audioPlayerRef.current = player;
+        return () => {
+            player.unload();
+        };
+    }, [currentSongIndex]);
+
     return (
         <div>
-            <SimpleGrid columns={1} spacingX='40px' spacingY='20px'>
-                <Box height='80px'></Box>
-                <Box height='80px'></Box>
-                <Box height='120px'></Box>
-                <Box className='musicCard'>
-                <Card borderRadius={10}>
+            <SimpleGrid columns={1} spacingX="40px" spacingY="20px">
+                <Box height="80px"></Box>
+                <Box height="80px"></Box>
+                <Box height="120px"></Box>
+                <Box className="musicCard">
+                    <Card borderRadius={10}>
                         <Center><Text fontWeight={800} marginBottom={1}>Now Playing</Text></Center>
                         <CardBody>
-                            <Image src={songs[currentSongIndex].cover} borderRadius={10} width={239} height={136} marginBottom={3} alt='Image' />
+                            <Image src={songs[currentSongIndex].cover} borderRadius={10} width={239} height={136} marginBottom={3} alt="Image" />
                             <Center><Text fontSize={'large'} fontWeight={700}>{songs[currentSongIndex].title}</Text></Center>
                             <Center><Text fontWeight={300}>{songs[currentSongIndex].artist}</Text></Center>
                             <Center mt={3}>
-                                <Button onClick={handlePrevious} variant="ghost" size="sm" mx={1} disabled={isPlaying}>
+                                <Button onClick={handlePrevious} variant="ghost" size="sm" mx={1}>
                                     <FaStepBackward />
                                 </Button>
                                 <Button onClick={handlePlay} variant="ghost" size="lg" mx={1}>
                                     {isPlaying ? <FaPause /> : <FaPlay />}
                                 </Button>
-                                <Button onClick={handleNext} variant="ghost" size="sm" mx={1} disabled={isPlaying}>
+                                <Button onClick={handleNext} variant="ghost" size="sm" mx={1}>
                                     <FaStepForward />
                                 </Button>
                             </Center>
@@ -97,7 +90,7 @@ const FooterContent = () => {
                 </Box>
             </SimpleGrid>
         </div>
-    )
-}
+    );
+};
 
-export default FooterContent
+export default FooterContent;

@@ -8,14 +8,15 @@ const cors = require('cors');
 
 const db = require('./config/mongoose.js');
 
-const allowedOrigins = [
-    'http://localhost:3000',    // Frontend development server
-    // 'https://your-production-app.com',  // Production frontend 
-  ];
+// const allowedOrigins = [
+//     'http://localhost:3000',    // Frontend development server
+//     // 'https://your-production-app.com',  // Production frontend 
+//   ];
 
 // Used express.urlencoded with extended option
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors())
 // app.use(express.json())
 
 // Serve static files (songs)
